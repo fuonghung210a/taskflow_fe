@@ -3,23 +3,24 @@ import "./App.css";
 import { ToastProvider } from "./common/ToastProvider";
 import { lazy } from "react";
 import { PrivateRoute } from "./components/auth/PrivateRoute";
+import { AuthProvider } from "./providers/AuthProvider";
 
 const Login = lazy(() =>
-  import("./pages/Login").then((module) => ({ default: module.Login })),
+  import("./pages/LoginPage").then((module) => ({ default: module.Login })),
 );
 
 function App() {
   return (
     <>
       <BrowserRouter>
-        <ToastProvider>
-          <Routes>
-            <Route path="/login" element={<Login />} />
-            <Route element={<PrivateRoute />}>
-              
-            </Route>
-          </Routes>
-        </ToastProvider>
+        <AuthProvider>
+          <ToastProvider>
+            <Routes>
+              <Route path="/login" element={<Login />} />
+              <Route element={<PrivateRoute />}></Route>
+            </Routes>
+          </ToastProvider>
+        </AuthProvider>
       </BrowserRouter>
     </>
   );
